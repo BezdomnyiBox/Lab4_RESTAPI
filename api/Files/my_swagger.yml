@@ -1,0 +1,116 @@
+# swagger.yml
+openapi: 3.0.0
+info:
+  title: "My First Flask REST API"
+  description: "An API about web service to managmant a firniture company"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+components:
+  schemas:
+
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        name:
+          type: "string"
+
+
+    Task:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        user_id:
+          type: "integer"
+        desc:
+          type: "string"
+
+  parameters:
+    id:
+      name: "iden"
+      description: "ID of the object to get"
+      in: path
+      required: True
+      schema:
+        type: "integer"
+
+paths:
+  /user:
+    post:
+      operationId: "Controllers.user_controller.create"
+      tags:
+        - "User"
+      summary: "Create a User"
+      requestBody:
+          description: "User to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: "Successfully created User"
+  
+  /todo:    
+    post:
+      operationId: "Controllers.task_controller.create"
+      tags:
+        - "Task"
+      summary: "Create a Task"
+      requestBody:
+          description: "Task to create"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "person"
+                $ref: "#/components/schemas/Task"
+      responses:
+        "201":
+          description: "Successfully created Task"
+  /todo/{iden}:
+  
+    get:
+      operationId: "Controllers.task_controller.read_all"
+      tags:
+        - Task  
+      summary: "Read the list of Task for User"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully read Task list for User"
+
+    put:
+      tags:
+        - Task
+      operationId: "Controllers.task_controller.update"
+      summary: "Update a Task"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully updated Task"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "person"
+              $ref: "#/components/schemas/Task"
+    delete:
+      tags:
+        - Task
+      operationId: "Controllers.task_controller.delete"
+      summary: "Delete a Task"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted Task"

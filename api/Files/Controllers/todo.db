@@ -1,0 +1,30 @@
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
+    user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	user_name VARCHAR(60)
+);
+
+INSERT INTO users(user_name)  VALUES 
+('Учиха Саске'),
+('Узумаки Наруто'),
+('Харуно Сакура');
+
+
+
+DROP TABLE IF EXISTS tasks;
+CREATE TABLE tasks (
+    task_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	user_id INTEGER,
+    task_description VARCHAR(200),
+    FOREIGN KEY (user_id)  REFERENCES users (user_id) ON DELETE CASCADE
+);
+
+INSERT INTO tasks (user_id, task_description)  VALUES
+(1,  'Стать крутым'),
+(1,  'Покинуть Коноху'),
+(1,  'Отомстить брату'),
+(2,  'Поесть рамен'),
+(2,  'Вернуть Саске'),
+(2,  'Спать'),
+(3,  'Полежать'),
+(3,  'Учиться');
